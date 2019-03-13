@@ -1909,14 +1909,27 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onClickDelete: function onClickDelete() {
-      this.$emit('delete');
+      var _this = this;
+
+      axios.delete("/thoughts/".concat(this.thought.id)).then(function () {
+        _this.$emit('delete');
+      });
     },
     onClickEdit: function onClickEdit() {
       this.editMode = true;
     },
     onClickUpdate: function onClickUpdate() {
-      this.editMode = false;
-      this.$emit('update', thought);
+      var _this2 = this;
+
+      var params = {
+        description: this.thought.description
+      };
+      axios.put("/thoughts/".concat(this.thought.id), params).then(function (response) {
+        _this2.editMode = false;
+        var thought = response.data;
+
+        _this2.$emit('update', thought);
+      });
     }
   }
 });
@@ -37102,7 +37115,13 @@ var render = function() {
     { staticClass: "card", staticStyle: { "margin-top": "20px" } },
     [
       _c("div", { staticClass: "card-header" }, [
-        _vm._v("Publicado en " + _vm._s(_vm.thought.created_at) + "\n    ")
+        _vm._v(
+          "Publicado en " +
+            _vm._s(_vm.thought.created_at) +
+            " - Ultima actualización: " +
+            _vm._s(_vm.thought.updated_at) +
+            "\n    "
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [

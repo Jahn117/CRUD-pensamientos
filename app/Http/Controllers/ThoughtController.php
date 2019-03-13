@@ -50,6 +50,8 @@ class ThoughtController extends Controller
         $thought = Thought::find($id);
         $thought->description = $request->description;
         $thought->save();
+
+        return $thought;
     }
 
     /**
