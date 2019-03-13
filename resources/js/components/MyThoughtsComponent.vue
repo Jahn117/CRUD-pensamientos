@@ -1,7 +1,8 @@
 <template>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form-component></form-component>   
+            <form-component 
+            @new="addThought"></form-component>   
             <thought-component 
             v-for="thought in thoughts" 
             :key="thought.id"
@@ -25,6 +26,12 @@
 
         mounted() {
             console.log('Component mounted.')
+        },
+
+        methods: {
+            addThought(thought){
+                this.thoughts.push(thought);
+            }
         }
     }
 </script>

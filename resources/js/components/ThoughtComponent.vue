@@ -21,11 +21,6 @@
         props: ['thought'],
         data(){
             return{
-                thought: {
-                    id: '',
-                    description: '',
-                    created_at: ''
-                }
             };
         },
 

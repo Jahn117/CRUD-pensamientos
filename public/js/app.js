@@ -1782,15 +1782,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      description: ''
+    };
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
+  },
+  methods: {
+    newThought: function newThought() {
+      var thought = {
+        id: 2,
+        description: this.description,
+        created_at: '12/03/2019'
+      };
+      this.$emit('new', thought);
+    }
   }
 });
 
@@ -1818,6 +1827,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1830,6 +1840,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     console.log('Component mounted.');
+  },
+  methods: {
+    addThought: function addThought(thought) {
+      this.thoughts.push(thought);
+    }
   }
 });
 
@@ -1865,13 +1880,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['thought'],
   data: function data() {
-    return {
-      thought: {
-        id: '',
-        description: '',
-        created_at: ''
-      }
-    };
+    return {};
   },
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -36922,28 +36931,49 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _vm._v("¿En que estás pensando ahora?\n    ")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("form", { attrs: { action: "" } }, [
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-header" }, [
+      _vm._v("¿En que estás pensando ahora?\n    ")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c(
+        "form",
+        {
+          attrs: { action: "" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.newThought()
+            }
+          }
+        },
+        [
           _c("div", { staticClass: "form-group" }, [
             _c("label", { attrs: { for: "thought" } }, [
               _vm._v("Ahora estoy pensando en:")
             ]),
             _vm._v(" "),
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.description,
+                  expression: "description"
+                }
+              ],
               staticClass: "form-control",
-              attrs: { type: "text", name: "thought" }
+              attrs: { type: "text", name: "thought" },
+              domProps: { value: _vm.description },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.description = $event.target.value
+                }
+              }
             })
           ]),
           _vm._v(" "),
@@ -36952,11 +36982,12 @@ var staticRenderFns = [
             { staticClass: "btn btn-primary", attrs: { type: "submit" } },
             [_vm._v("\n                Enviar pensamiento\n            ")]
           )
-        ])
-      ])
+        ]
+      )
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -36983,7 +37014,7 @@ var render = function() {
       "div",
       { staticClass: "col-md-8" },
       [
-        _c("form-component"),
+        _c("form-component", { on: { new: _vm.addThought } }),
         _vm._v(" "),
         _vm._l(_vm.thoughts, function(thought) {
           return _c("thought-component", {

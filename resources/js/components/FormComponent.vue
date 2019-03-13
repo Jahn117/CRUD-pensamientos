@@ -4,16 +4,10 @@
         </div>
 
         <div class="card-body">
-            <!-- @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('status') }}
-                </div>
-            @endif -->
-
-            <form action="">
+            <form action="" v-on:submit.prevent="newThought()">
                 <div class="form-group">
                     <label for="thought">Ahora estoy pensando en:</label>
-                    <input type="text" class="form-control" name="thought">
+                    <input type="text" class="form-control" name="thought" v-model="description">
                 </div>
                 <button type="submit" class="btn btn-primary">
                     Enviar pensamiento
@@ -25,8 +19,23 @@
 
 <script>
     export default {
+        data(){
+            return{
+                description: ''
+            }
+        },
         mounted() {
             console.log('Component mounted.')
+        },
+        methods: {
+            newThought(){
+                const thought = {
+                    id: 2,
+                    description: this.description,
+                    created_at: '12/03/2019'
+                };
+                this.$emit('new', thought);
+            }
         }
     }
 </script>
