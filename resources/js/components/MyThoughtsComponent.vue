@@ -7,7 +7,8 @@
             v-for="(thought, index) in thoughts" 
             :key="thought.id"
             :thought="thought"
-            @delete="deleteThought(index)">                
+            @update="updateThought(index, ...arguments)"
+            @delete="deleteThought(index)">           
             </thought-component>
         </div>
     </div> 
@@ -32,6 +33,9 @@
         methods: {
             addThought(thought){
                 this.thoughts.push(thought);
+            },
+            updateThought(index, thought){
+                this.thoughts[index] = thought;
             },
             deleteThought(index){
                 this.thoughts.splice(index,1);
