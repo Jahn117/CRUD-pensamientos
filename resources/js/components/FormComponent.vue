@@ -35,6 +35,7 @@
                     created_at: '12/03/2019'
                 };
                 this.$emit('new', thought);
+                this.description = '';
             }
         }
     }

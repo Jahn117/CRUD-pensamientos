@@ -1799,6 +1799,7 @@ __webpack_require__.r(__webpack_exports__);
         created_at: '12/03/2019'
       };
       this.$emit('new', thought);
+      this.description = '';
     }
   }
 });
